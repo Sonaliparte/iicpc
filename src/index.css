@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #050508;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(5, 5, 8, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.15);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.45);
+}
+
+/* Custom Glow Classes */
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.6), 0 0 20px rgba(0, 245, 255, 0.2);
+}
+
+.text-glow-violet {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.6), 0 0 20px rgba(139, 92, 246, 0.2);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.6), 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.text-glow-crimson {
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6), 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+/* Glassmorphism panel base */
+.glass-panel {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 245, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 245, 255, 0.04);
+}
+
+/* Hide default input outline glows */
+input:focus, select:focus, button:focus {
+  outline: none;
+}
