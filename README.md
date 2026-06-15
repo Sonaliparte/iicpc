@@ -516,4 +516,4 @@ iicpc-platform/
 
 ---
 
-> *"This is not a standard demo-to-win hackathon. We expect high-performance code, system resilience, and a deep understanding of scale and distributed systems."*
+> 
