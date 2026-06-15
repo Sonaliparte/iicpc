@@ -516,14 +516,4 @@ iicpc-platform/
 
 ---
 
-## Hackathon Details
-
-| Field | Value |
-|-------|-------|
-| **Event** | IICPC Summer Hackathon 2026 |
-| **Dates** | May 9 – June 10, 2026 |
-| **Submissions open** | Final week of hackathon |
-| **Team size** | Up to 3 members |
-| **Focus** | Distributed systems, low-latency engineering, algorithmic correctness |
-
 > *"This is not a standard demo-to-win hackathon. We expect high-performance code, system resilience, and a deep understanding of scale and distributed systems."*
