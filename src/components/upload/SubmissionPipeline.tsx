@@ -5,6 +5,7 @@ import { PipelineStep } from '../../types';
 interface SubmissionPipelineProps {
   status: string;
   error?: string;
+  compact?: boolean;
 }
 
 export function getPipelineSteps(status: string, error?: string): PipelineStep[] {
@@ -59,7 +60,7 @@ export function getPipelineSteps(status: string, error?: string): PipelineStep[]
   return steps;
 }
 
-export default function SubmissionPipeline({ status, error }: SubmissionPipelineProps) {
+export default function SubmissionPipeline({ status, error, compact = false }: SubmissionPipelineProps) {
   const steps = getPipelineSteps(status, error);
 
   const getStepIcon = (name: string, stepStatus: string) => {
@@ -82,17 +83,17 @@ export default function SubmissionPipeline({ status, error }: SubmissionPipeline
   const isSuccess = status === 'completed';
 
   return (
-    <div className="flex flex-col space-y-6 w-full p-6 rounded-2xl border border-white/[0.04] bg-white/[0.01] backdrop-blur-md">
+    <div className={`flex flex-col w-full rounded-2xl border border-white/[0.04] bg-white/[0.01] backdrop-blur-md ${compact ? 'space-y-4 p-4' : 'space-y-6 p-6'}`}>
       <div className="flex flex-col">
         <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Sandbox Compilation & Deployment</span>
         <h3 className="text-sm font-display font-bold uppercase tracking-wider text-white mt-0.5">Automated Test Pipeline</h3>
       </div>
       
       {/* Horizontal Pipeline Wrapper */}
-      <div className="relative flex flex-col md:flex-row items-center justify-between w-full md:px-12 py-6 space-y-10 md:space-y-0">
+      <div className={`relative flex w-full ${compact ? 'flex-col items-start py-2 space-y-3' : 'flex-col md:flex-row items-center justify-between py-6 space-y-10 md:space-y-0 md:px-12'}`}>
         
         {/* Connection Link SVG Underlay */}
-        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 hidden md:block z-0 px-24">
+        <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 z-0 px-24 ${compact ? 'hidden' : 'hidden md:block'}`}>
           <svg className="w-full h-2 overflow-visible" fill="none">
             {/* Background Dim Line */}
             <line 
@@ -134,13 +135,12 @@ export default function SubmissionPipeline({ status, error }: SubmissionPipeline
         {/* Pipeline Nodes mapping */}
         {steps.map((step, index) => {
           const stepStatus = step.status;
-          const isIdle = stepStatus === 'idle';
           const isRunningStep = stepStatus === 'running';
           const isSuccessStep = stepStatus === 'success';
           const isFailedStep = stepStatus === 'failed';
 
           return (
-            <div key={step.name} className="relative z-10 flex flex-col items-center space-y-3.5 group">
+            <div key={step.name} className={`relative z-10 group ${compact ? 'flex w-full items-center gap-3' : 'flex flex-col items-center space-y-3.5'}`}>
               {/* Outer floating node circle */}
               <motion.div
                 animate={isRunningStep ? { 
@@ -149,7 +149,7 @@ export default function SubmissionPipeline({ status, error }: SubmissionPipeline
                 } : {}}
                 transition={{ duration: 1.5, repeat: Infinity }}
                 className={`
-                  w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300
+                  ${compact ? 'w-9 h-9' : 'w-12 h-12'} rounded-full border flex items-center justify-center transition-all duration-300
                   ${isSuccessStep 
                     ? 'bg-emerald-500/10 border-emerald-500 text-emerald-400 shadow-glass-cyan hover:shadow-halo-cyan' 
                     : isFailedStep
@@ -164,7 +164,7 @@ export default function SubmissionPipeline({ status, error }: SubmissionPipeline
               </motion.div>
 
               {/* Node text and description */}
-              <div className="flex flex-col items-center">
+              <div className={`flex flex-col ${compact ? 'items-start' : 'items-center'}`}>
                 <span className={`
                   text-xs font-display font-bold uppercase tracking-wider
                   ${isRunningStep ? 'text-cyber-cyan text-glow-cyan' : isSuccessStep ? 'text-emerald-400' : isFailedStep ? 'text-cyber-crimson' : 'text-white/40'}
@@ -178,7 +178,7 @@ export default function SubmissionPipeline({ status, error }: SubmissionPipeline
               </div>
 
               {/* Mini Connecting lines for mobile layouts */}
-              {index < steps.length - 1 && (
+              {index < steps.length - 1 && !compact && (
                 <div className="w-0.5 h-8 bg-white/[0.04] md:hidden" />
               )}
             </div>

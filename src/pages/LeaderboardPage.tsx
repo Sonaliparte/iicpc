@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Cpu, Zap, Activity, HelpCircle } from 'lucide-react';
 import LeaderboardTable from '../components/leaderboard/LeaderboardTable';
 import { useLeaderboardStore } from '../store/leaderboardStore';

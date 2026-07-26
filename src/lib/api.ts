@@ -17,7 +17,7 @@ async function request(url: string, options?: RequestInit) {
       try {
         const parsed = JSON.parse(errorText);
         if (parsed.error) errorMsg = parsed.error;
-      } catch (e) {}
+      } catch {}
       throw new Error(errorMsg);
     }
     return response;

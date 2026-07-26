@@ -1,12 +1,12 @@
-import { Team, FillEvent } from '../types';
+import { FillEvent } from '../types';
 import { generateMockLog } from './mockData';
 
 type WSMessageCallback = (data: any) => void;
 
 class MockWebSocketClient {
   private listeners: Map<string, WSMessageCallback[]> = new Map();
-  private intervalId: NodeJS.Timeout | null = null;
-  private logIntervalId: NodeJS.Timeout | null = null;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
+  private logIntervalId: ReturnType<typeof setInterval> | null = null;
   private isConnected = false;
 
   constructor() {
@@ -69,7 +69,7 @@ class MockWebSocketClient {
   }
 
   // Simulate pushing a new team submission from the UI
-  public submitBinary(teamId: string, teamName: string, language: string) {
+  public submitBinary(teamId: string, language: string) {
     setTimeout(() => this.triggerEvent('submissionProgress', { teamId, step: 'Upload', status: 'success' }), 500);
     setTimeout(() => this.triggerEvent('submissionProgress', { teamId, step: 'Validate', status: 'success' }), 1200);
     setTimeout(() => this.triggerEvent('submissionProgress', { teamId, step: 'Containerize', status: 'success' }), 2200);

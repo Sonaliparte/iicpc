@@ -159,7 +159,6 @@ export const useLeaderboardStore = create<LeaderboardState>((set, get) => ({
 
   triggerRandomTeamUpdate: () => set((state) => {
     const randomIndex = Math.floor(Math.random() * state.teams.length);
-    const targetTeam = state.teams[randomIndex];
     
     const updatedTeams = state.teams.map((team, idx) => {
       if (idx === randomIndex) {

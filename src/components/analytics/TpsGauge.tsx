@@ -8,7 +8,6 @@ interface TpsGaugeProps {
 export default function TpsGauge({ tps, peakTps }: TpsGaugeProps) {
   // Cap at 150k TPS for the gauge maximum
   const maxTps = 150000;
-  const percentage = (tps / maxTps) * 100;
   
   // Format the Recharts payload
   const chartData = [

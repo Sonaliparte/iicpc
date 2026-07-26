@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Activity, BarChart2, ShieldCheck, ChevronRight, Play } from 'lucide-react';
+import { Cpu, Activity, BarChart2, ShieldCheck, ChevronRight } from 'lucide-react';
 import { useLeaderboardStore } from '../store/leaderboardStore';
 import { Submission } from '../types';
 import LatencyChart from '../components/analytics/LatencyChart';
 import TpsGauge from '../components/analytics/TpsGauge';
-import BotFleetViz from '../components/analytics/BotFleetViz';
 import FillLogStream from '../components/analytics/FillLogStream';
 import SubmissionCard from '../components/analytics/SubmissionCard';
 import GlowCard from '../components/shared/GlowCard';
@@ -181,19 +180,6 @@ export default function AnalyticsPage() {
               </h3>
             </div>
             <TpsGauge tps={currentStats.tps} peakTps={team.peakTps} />
-          </div>
-        </GlowCard>
-
-        {/* Orbit Fleet Simulator (Span 1) */}
-        <GlowCard glowColor="violet">
-          <div className="p-5 space-y-4 flex flex-col h-full justify-between">
-            <div className="flex flex-col">
-              <span className="text-[10px] font-mono text-cyber-violet uppercase tracking-widest font-bold">STRESS_BOT_FLEET</span>
-              <h3 className="text-sm font-display font-bold uppercase tracking-wider text-white">
-                Sandbox bot pod fleet orbit
-              </h3>
-            </div>
-            <BotFleetViz />
           </div>
         </GlowCard>
 

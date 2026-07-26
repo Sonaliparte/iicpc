@@ -31,7 +31,6 @@ export default function FillLogStream({ logs }: FillLogStreamProps) {
             {visibleLogs.map((log) => {
               const isBuy = log.type === 'BUY';
               const isSell = log.type === 'SELL';
-              const isCancel = log.type === 'CANCEL';
 
               return (
                 <motion.div

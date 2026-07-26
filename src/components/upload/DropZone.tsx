@@ -1,16 +1,15 @@
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { UploadCloud, FileCode, CheckCircle, X } from 'lucide-react';
 
 interface DropZoneProps {
   onFileSelect: (file: File) => void;
   selectedFile: File | null;
   onClear: () => void;
+  disabled?: boolean;
 }
 
-export default function DropZone({ onFileSelect, selectedFile, onClear }: DropZoneProps) {
+export default function DropZone({ onFileSelect, selectedFile, onClear, disabled = false }: DropZoneProps) {
   const [isDragActive, setIsDragActive] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleDrag = (e: React.DragEvent) => {
@@ -24,6 +23,7 @@ export default function DropZone({ onFileSelect, selectedFile, onClear }: DropZo
   };
 
   const handleDrop = (e: React.DragEvent) => {
+    if (disabled) return;
     e.preventDefault();
     e.stopPropagation();
     setIsDragActive(false);
@@ -34,6 +34,7 @@ export default function DropZone({ onFileSelect, selectedFile, onClear }: DropZo
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       onFileSelect(e.target.files[0]);
@@ -57,33 +58,25 @@ export default function DropZone({ onFileSelect, selectedFile, onClear }: DropZo
       <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Contestant Program File</span>
       
       <div 
-        onDragEnter={handleDrag}
-        onDragOver={handleDrag}
-        onDragLeave={handleDrag}
-        onDrop={handleDrop}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="relative w-full h-56 rounded-2xl overflow-hidden p-[1px] transition-all duration-300"
+        onDragEnter={disabled ? undefined : handleDrag}
+        onDragOver={disabled ? undefined : handleDrag}
+        onDragLeave={disabled ? undefined : handleDrag}
+        onDrop={disabled ? undefined : handleDrop}
+        className="relative w-full h-56 rounded-2xl overflow-hidden transition-all duration-300"
       >
-        {/* Animated Conic Border Spinning Glow (Only Active on Hover or Drag) */}
-        {(isHovered || isDragActive) && !selectedFile && (
-          <div 
-            className="absolute inset-0 z-0 animate-spin-slow bg-[conic-gradient(from_0deg,#00f5ff_0%,#8b5cf6_25%,transparent_50%,#00f5ff_75%,#8b5cf6_100%)]"
-            style={{ filter: 'blur(3px)' }}
-          />
-        )}
-        
-        {/* Main Inner Glass Container */}
+        {/* Main Inner Container */}
         <div 
-          onClick={!selectedFile ? triggerInput : undefined}
+          onClick={!selectedFile && !disabled ? triggerInput : undefined}
           className={`
             relative z-10 w-full h-full rounded-2xl flex flex-col items-center justify-center px-6 border-2 border-dashed
-            transition-all duration-300 cursor-pointer text-center
+            transition-all duration-300 text-center
             ${selectedFile 
               ? 'border-emerald-500/40 bg-emerald-500/[0.02] cursor-default' 
+              : disabled
+                ? 'border-white/10 bg-white/[0.02] cursor-not-allowed opacity-60'
               : isDragActive
                 ? 'border-cyber-cyan bg-cyber-cyan/[0.02]'
-                : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.04]'
+                : 'border-white/10 bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer'
             }
           `}
         >
