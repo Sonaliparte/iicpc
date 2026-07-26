@@ -37,7 +37,7 @@ Code Upload (.zip)
             └─► Docker Container (contestant's engine, port-mapped)
                     └─► Bot Fleet (concurrent trading bots)
                             └─► Telemetry Aggregation
-                                    └─► Live Leaderboard + Analytics Dashboard
+                                    └─► Analytics Dashboard
 ```
 
 Each submission is scored on three pillars: **Speed** (latency), **Stability** (error rate), and **Correctness** (fill accuracy).
@@ -46,47 +46,6 @@ Each submission is scored on three pillars: **Speed** (latency), **Stability** (
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        Host Machine / Cloud VM                       │
-│                                                                       │
-│  ┌──────────────────┐        ┌─────────────────────────────────────┐ │
-│  │  React Frontend  │        │         Docker Socket (DinD)         │ │
-│  │  (Vite + TS)     │        │                                     │ │
-│  │  Port: 5173      │        │  ┌───────────────────────────────┐  │ │
-│  │                  │        │  │    sandbox-runner (Go)         │  │ │
-│  │  • Upload Page   │◄──────►│  │    Port: 9090                 │  │ │
-│  │  • Leaderboard   │  REST  │  │                               │  │ │
-│  │  • Analytics     │        │  │  • Accepts .zip uploads       │  │ │
-│  └──────────────────┘        │  │  • Builds Docker images       │  │ │
-│                               │  │  • Spawns isolated containers │  │ │
-│                               │  │  • Health-checks submissions  │  │ │
-│                               │  │  • Auto-cleanup on timeout   │  │ │
-│                               │  └───────────────────────────────┘  │ │
-│                               │           │ Docker API               │ │
-│                               │           ▼                          │ │
-│                               │  ┌───────────────────────────────┐  │ │
-│                               │  │  Contestant Container(s)       │  │ │
-│                               │  │  Port: 10000–10004 (mapped)   │  │ │
-│                               │  │                               │  │ │
-│                               │  │  • Compiled C++ engine        │  │ │
-│                               │  │  • REST API on :8080          │  │ │
-│                               │  │  • 512 MB RAM limit           │  │ │
-│                               │  │  • 1 CPU limit (NanoCPUs)    │  │ │
-│                               │  └───────────────────────────────┘  │ │
-│                               │           ▲                          │ │
-│                               │           │ HTTP Orders              │ │
-│                               │  ┌───────────────────────────────┐  │ │
-│                               │  │   bot-worker (Go)             │  │ │
-│                               │  │                               │  │ │
-│                               │  │  • N concurrent goroutines    │  │ │
-│                               │  │  • 3 bot personas (mixed)     │  │ │
-│                               │  │  • Atomic latency tracking    │  │ │
-│                               │  │  • Final composite report     │  │ │
-│                               │  └───────────────────────────────┘  │ │
-│                               └─────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────────────────┘
-```
 
 ---
 
@@ -516,14 +475,4 @@ iicpc-platform/
 
 ---
 
-## Hackathon Details
-
-| Field | Value |
-|-------|-------|
-| **Event** | IICPC Summer Hackathon 2026 |
-| **Dates** | May 9 – June 10, 2026 |
-| **Submissions open** | Final week of hackathon |
-| **Team size** | Up to 3 members |
-| **Focus** | Distributed systems, low-latency engineering, algorithmic correctness |
-
-> *"This is not a standard demo-to-win hackathon. We expect high-performance code, system resilience, and a deep understanding of scale and distributed systems."*
+> 
