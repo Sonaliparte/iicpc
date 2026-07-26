@@ -1,5 +1,8 @@
 # IICPC Summer Hackathon 2026 — Distributed Benchmarking Platform
 
+![Uploading image.png…]()
+
+
 > **Architect and benchmark contestant-submitted trading infrastructure at scale.**  
 > A fully distributed system that accepts C++ matching engine submissions, containerizes them in isolated sandboxes, unleashes a coordinated fleet of trading bots to stress-test them, and streams live telemetry to a real-time leaderboard.
 
