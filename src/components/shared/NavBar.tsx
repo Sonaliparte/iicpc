@@ -10,11 +10,12 @@ interface NavBarProps {
 export default function NavBar({ currentView, navigateTo, hasSubmissionData }: NavBarProps) {
   const navItems: Array<{ id: ViewType; label: string }> = [
     { id: 'upload', label: 'Upload' },
+    { id: 'upload', label: 'Leaderboard' },
     ...(hasSubmissionData
       ? [
-          { id: 'leaderboard' as ViewType, label: 'Leaderboard' },
-          { id: 'analytics' as ViewType, label: 'Analytics' }
-        ]
+        { id: 'leaderboard' as ViewType, label: 'Leaderboard' },
+        { id: 'analytics' as ViewType, label: 'Analytics' }
+      ]
       : [])
   ];
 
@@ -29,11 +30,10 @@ export default function NavBar({ currentView, navigateTo, hasSubmissionData }: N
           <button
             key={item.id}
             onClick={() => navigateTo(item.id)}
-            className={`rounded-md px-3 py-2 text-sm text-left transition-colors ${
-              currentView === item.id
+            className={`rounded-md px-3 py-2 text-sm text-left transition-colors ${currentView === item.id
                 ? 'bg-cyber-cyan/15 text-cyber-cyan'
                 : 'text-white/70 hover:bg-white/10 hover:text-white'
-            }`}
+              }`}
           >
             {item.label}
           </button>
